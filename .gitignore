@@ -8,3 +8,4 @@
 *.#*
 
 virtualenv
+server/server/db.sqlite
