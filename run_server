@@ -1,0 +1,19 @@
+#! /bin/sh
+
+# Navigate to run_server's directory so we can refer to other files relative
+# to its location.
+cd `dirname $0`
+
+if [ ! -d virtualenv/ ]
+then
+	python virtualenv.py virtualenv
+
+	. virtualenv/bin/activate
+	pip install --use-mirrors Django==1.4.3
+
+	## s3g dependencies
+	pip install --use-mirrors coverage doxypy unittest-xml-reporting mock
+	easy_install thirdparty/s3g/submodule/conveyor_bins/pyserial-2.7_mb2.1-py2.7.egg
+fi
+
+virtualenv/bin/python server/manage.py runserver $@
