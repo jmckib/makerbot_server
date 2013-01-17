@@ -1,0 +1,10 @@
+# Python compiled & optimized files
+*.pyc
+*.pyo
+
+# Emacs backup and messup files
+*#
+*~
+*.#*
+
+virtualenv
