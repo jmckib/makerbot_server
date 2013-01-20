@@ -6,7 +6,7 @@ lib_path = os.path.abspath(os.path.dirname(__file__) + '/../thirdparty/s3g')
 sys.path.append(lib_path)
 import makerbot_driver
 
-import RawFileReader
+from RawFileReader import RawFileReader
 
 
 def print_s3g(s3g_file):
