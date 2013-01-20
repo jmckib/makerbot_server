@@ -6,6 +6,8 @@ cd `dirname $0`
 
 if [ ! -d virtualenv/ ]
 then
+	git submodule update --init --recursive
+
 	python virtualenv.py virtualenv
 
 	. virtualenv/bin/activate
