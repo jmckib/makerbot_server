@@ -1,22 +1,26 @@
 import struct
 import sys
-sys.path.append('/Users/jeremy/src/make-me/vendor/s3g')
 
+sys.path.append('/Users/jeremy/src/make-me/vendor/s3g')
 import makerbot_driver
 
 TOOL_ACTION = makerbot_driver.host_action_command_dict['TOOL_ACTION_COMMAND']
 
 
 class RawFileReader(makerbot_driver.FileReader.FileReader):
-    """Unlike FileReader, also return the raw strings from the s3g file.
+    """Like FileReader, but also return the raw strings from the s3g file.
 
     FileReader.ReadFile returns a list of commands, where each command is a
-    list containing the command's identifier and its arguments.
+    list containing the command's identifier and its
+    arguments. RawFileReader.ReadFile also returns a list of commands, but
+    each command is paired with the string from the s3g file representing
+    the command.
 
-    RawFileReader also returns a list of commands, but in addition it
-    returns a list of the raw strings from the file representing each
-    command. This is useful for reading an x3g file and then sending the
-    commands to a machine using s3g.send_action_payload.
+    This is useful for reading an s3g file and then sending the commands to
+    a machine using s3g.send_action_payload.
+
+    This code is mostly copied from FileReader, with a few changes in order
+    to pass on the strings.
     """
 
     def ParseOutParameters(self, formatString):
@@ -25,7 +29,7 @@ class RawFileReader(makerbot_driver.FileReader.FileReader):
 
         @param string formatString: The format string we will unpack from
           the file
-        @return a two tuple containing the string read out of the file, and
+        @return a 2-tuple containing the string read out of the file, and
           a list of objects unpacked from the input s3g file
         """
         returnParams = []
@@ -64,7 +68,7 @@ class RawFileReader(makerbot_driver.FileReader.FileReader):
         """Gets the next command and returns the parsed commands and
         associated parameters
 
-        @return a two tuple containing the string read out of the file, and
+        @return a 2-tuple containing the string read out of the file, and
           a list of the commands.
         """
         cmd = self.GetNextCommand()
@@ -77,8 +81,8 @@ class RawFileReader(makerbot_driver.FileReader.FileReader):
     def ReadFile(self):
         """Reads from an s3g file until it cant read anymore
 
-        @return payloads: A list of two tuples, one per payload, where the
-          first item in the two-tuple is the string read out of the file, and
+        @return payloads: A list of 2-tuples, one per payload, where the
+          first item in the 2-tuple is the string read out of the file, and
           the second is a list representing the command and its parameters.
         """
         payloads = []
